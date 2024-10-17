@@ -15,11 +15,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - env: 
-        DOCKER_USER: ${{ secrets.DOCKER_USER }}
-        DOCKER_PWD: ${{ secrets.DOCKER_PWD }} 
     - uses: actions/checkout@v4
     - name: login to docker
+      env: 
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_PWD: ${{ secrets.DOCKER_PWD }} 
+
       run: docker login --username=$DOCKER_USER --email=$DOCKER_PWD 
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag $DOCKER_USER/my-image-name:$(date +%s)
